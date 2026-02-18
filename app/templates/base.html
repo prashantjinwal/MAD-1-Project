@@ -5,7 +5,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <h1>Hello Flask 🚀</h1>
-    <p>Flask project setup successful!</p>
+    {% block content %}{% endblock %}
 </body>
 </html>

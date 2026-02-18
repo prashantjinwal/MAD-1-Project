@@ -13,6 +13,8 @@ def create_app():
 
     from app.auth import auth
     app.register_blueprint(auth)
+    from app.home import home
+    app.register_blueprint(home)
 
     with app.app_context():
         from app import models
