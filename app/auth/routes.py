@@ -6,6 +6,7 @@ from app.models import User, Student
 from app.auth import auth
 
 
+
 @auth.route("/register/student", methods=['GET', 'POST'])
 def register_student():
      if request.method == 'POST':
@@ -16,7 +17,7 @@ def register_student():
 
          if User.query.filter_by(email=email).first():
            flash("Already register")
-           return redirect(url_for("auth.login_student"))
+           return redirect(url_for("auth.login"))
          user  = User(
            email = email,
            password= generate_password_hash(password),
@@ -34,35 +35,39 @@ def register_student():
          db.session.commit()
 
          flash("register successfully, Please login.")
-         return redirect(url_for("auth.login_student"))
+         return redirect(url_for("auth.login"))
 
      return render_template("auth/register.html")
 
 
 @auth.route("/login/student", methods=['GET','POST'])
-def login_student():
+def login():
     if request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
 
         user = User.query.filter_by(email=email).first()
 
+
         if not user:
             flash("user not found")
-            return redirect(url_for('auth.login_student'))
-        if user.role != 'student':
-            flash("Unauthorized access")
-            return redirect(url_for('auth.login_student'))
+            return redirect(url_for('auth.login'))
         if not check_password_hash(user.password, password):
             flash("Incorrect password")
-            return redirect(url_for("auth.login_student"))
+            return redirect(url_for("auth.login"))
         
         login_user(user)
         flash('Login sucessfully')
-        return redirect(url_for('student.s_dashboard'))
-    
+
+        # role based redirect
+        if user.role == 'admin':
+            return redirect(url_for('admin.a_admin'))
+        if user.role == 'student':
+            return redirect(url_for('student.s_student'))
+        
+        return redirect(url_for("home.landing_page"))
+
     return render_template('auth/login.html')
       
-
 
     

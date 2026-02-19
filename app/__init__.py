@@ -15,6 +15,11 @@ def create_app():
     app.register_blueprint(auth)
     from app.home import home
     app.register_blueprint(home)
+    from app.student import student
+    app.register_blueprint(student)
+    from app.admin import admin
+    app.register_blueprint(admin)
+
 
     with app.app_context():
         from app import models
