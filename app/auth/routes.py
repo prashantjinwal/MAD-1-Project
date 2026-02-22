@@ -6,7 +6,6 @@ from app.models import User, Student
 from app.auth import auth
 
 
-
 @auth.route("/register/student", methods=['GET', 'POST'])
 def register_student():
      if request.method == 'POST':

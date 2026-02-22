@@ -3,7 +3,6 @@ from werkzeug.security import generate_password_hash
 from app.extensions import db, login_manager
 
 
-
 def create_app():
     app = Flask(__name__)
     app.config.from_object('config.Config')
