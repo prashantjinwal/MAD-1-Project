@@ -18,6 +18,8 @@ def create_app():
     app.register_blueprint(student)
     from app.admin import admin
     app.register_blueprint(admin)
+    from app.company import company
+    app.register_blueprint(company)
 
 
     with app.app_context():

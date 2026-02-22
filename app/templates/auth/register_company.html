@@ -9,22 +9,17 @@
 
 <form method="POST">
     <div class="text-center mb-4" >
-        <h2 class="d-inline">Register </h2> <span class="text-primary fw-fw-light">( as student )</span>
+        <h2 class="d-inline">Register </h2> <span class="text-primary fw-fw-light">( as company )</span>
     </div>
 
     <div class="mb-1">
-       <label class="form-label fw-medium ">Name</label>
-        <input name="name" placeholder="Name" required class="form-control" ><br>
-    </div>
-
-    <div class="mb-1">
-       <label class="form-label fw-medium ">Roll no</label>
-        <input name="roll_no" placeholder="Roll No" required class="form-control" ><br>
+       <label class="form-label fw-medium ">Company Name</label>
+        <input name="company_name" placeholder="Company Name" required class="form-control" ><br>
     </div>
 
     <div class="mb-1">
        <label class="form-label fw-medium ">Email address</label>
-        <input type="email" name="email" class="form-control" placeholder="Institutional email address" required><br>
+        <input type="email" name="email" class="form-control" placeholder="Company email address" required><br>
     </div>
 
     <div class="mb-2">
@@ -36,8 +31,8 @@
     <button type="submit" class="btn btn-primary px-5" >Register</button>
     </div>
 
-    <p class="text-center mt-2 "> Want to register as a company?
-    <a href="{{ url_for('auth.register_company') }}" class="text-primary">
+    <p class="text-center mt-2 "> Want to register as a student?
+    <a href="{{ url_for('auth.register_student') }}" class="text-primary">
         Click here
     </a> </p>
 
