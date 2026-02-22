@@ -1,3 +1,64 @@
-<div>
-     <h2>welcome admin</h2>
-</div>
+{% extends 'base.html' %}
+
+{% block content %}
+     <div class="p-5 bg-secondary bg-opacity-25 vh-100">
+          <div>
+               <h3 class="fs-3">Admin dashboard</h3>
+          </div>
+
+          <div class="bg-light p-4 rounded-4 " >
+
+              <div class="row g-4 pt-2">
+
+               <!-- Total student -->
+               <div class="col-md-3">
+               <div class="card text-white shadow rounded-4 border-0" style="background: linear-gradient(135deg,#0582ca,#224abe);">
+                    <div class="card-body">
+                        <h6 class="text-uppercase">Total Students</h6>
+                        <h2 class="fw-bold">{{total_student}}</h2>
+                    </div>
+               </div>
+               </div>
+
+               <!-- Total Companies  -->
+               <div class="col-md-3">
+               <div class="card text-white shadow rounded-4 border-0" style="background: linear-gradient(135deg,#0582ca,#224abe);">
+                    <div class="card-body">
+                        <h6 class="text-uppercase">Total Companies</h6>
+                        <h2 class="fw-bold">{{total_companies}}</h2>
+                    </div>
+               </div>
+               </div>
+
+               <!-- Placement Drives -->
+               <div class="col-md-3">
+               <div class="card text-white shadow rounded-4 border-0" style="background: linear-gradient(135deg,#0582ca,#224abe);">
+                    <div class="card-body">
+                        <h6 class="text-uppercase">Placement Drives</h6>
+                        <h2 class="fw-bold">{{total_drives}}</h2>
+                    </div>
+               </div>
+               </div>
+
+               <!-- Applications  -->
+               <div class="col-md-3">
+               <div class="card text-white shadow rounded-4 border-0" style="background: linear-gradient(135deg,#0582ca,#224abe);">
+                    <div class="card-body">
+                        <h6 class="text-uppercase">Applications</h6>
+                        <h2 class="fw-bold">{{total_applications}}</h2>
+                    </div>
+               </div>
+               </div>
+
+               
+              
+
+
+               </div>
+               </div>
+
+          </div>
+          </div>
+
+     </div>
+{% endblock %}

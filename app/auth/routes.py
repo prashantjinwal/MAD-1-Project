@@ -1,5 +1,5 @@
 from flask import  render_template, url_for, redirect, request, flash, session
-from flask_login import login_user
+from flask_login import login_user, login_required,logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.extensions import db
 from app.models import User, Student, Company
@@ -106,4 +106,9 @@ def login():
     return render_template('auth/login.html')
       
 
-    
+@auth.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    flash("Logged out successfully")
+    return redirect(url_for("home.landing_page"))
