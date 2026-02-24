@@ -40,7 +40,7 @@ def register_student():
      return render_template("auth/register.html")
 
 
-# Register for company
+# Register for companies
 @auth.route("/register/company", methods=['GET', 'POST'])
 def register_company():
      if request.method == 'POST':
