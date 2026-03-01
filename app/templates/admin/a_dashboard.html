@@ -6,6 +6,7 @@
                <h3 class="fs-3">Admin dashboard</h3>
           </div>
 
+          <!-- count start -->
           <div class="bg-light p-4 rounded-4 " >
 
               <div class="row g-4 pt-2">
@@ -55,6 +56,28 @@
 
 
                </div>
+               </div>
+               <!-- count end -->
+
+               <!-- approveal company -->
+               <div class="card shadow p-4 mt-4">
+               <div class="d-flex justify-content-between"><h4>Pending Companies</h4> 
+                    <span>{% if view == "blacklist" %}
+                              <a class="btn btn-primary btn-sm" href="{{ url_for('admin.a_admin') }}">
+                                   View Pending
+                              </a>
+                         {% else %}
+                              <a class="btn btn-dark btn-sm" href="{{ url_for('admin.a_admin', view='blacklist') }}">
+                                   View Blacklisted
+                              </a>
+                    {% endif %}</span> 
+               </div>
+               {% if view == "blacklist" %}
+                    {% include 'admin/blacklist_edit.html'   %}
+               {% else %}
+                    {% include 'admin/pending_c.html'  %}
+               {% endif %}
+               
                </div>
 
           </div>

@@ -5,5 +5,6 @@ from app.company import company
 @company.route('/company/dashboard')
 @login_required
 def c_company():
+     
      return render_template('company/c_dashboard.html')
 

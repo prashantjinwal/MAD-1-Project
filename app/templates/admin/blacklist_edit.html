@@ -1,0 +1,29 @@
+
+     {% if all_blocked_companies %}
+    <table class="table table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Company Name</th>
+                <th>Email</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for company in all_blocked_companies  %}
+            <tr>
+                <td>{{ company.id }}</td>
+                <td>{{ company.company_name }}</td>
+                <td>{{ company.user.email }}</td>
+                <td>
+                    <a href="/admin/pending/{{ company.id }}"
+                       class="btn btn-success btn-sm">whitelist</a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-muted">No blacklisted companies</p>
+    {% endif %}
