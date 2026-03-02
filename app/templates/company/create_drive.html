@@ -1,0 +1,12 @@
+
+<div class="mt-4">
+    {% if comp.approval_status == "approved" %}
+        <a href="/company/create-drive" class="btn btn-primary  ">
+            + Create Placement Drive
+        </a>
+    {% else %}
+        <div class="alert alert-warning">
+            Your account is not approved yet. You cannot create drives.
+        </div>
+    {% endif %}
+</div>

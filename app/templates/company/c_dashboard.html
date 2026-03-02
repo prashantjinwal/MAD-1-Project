@@ -3,12 +3,46 @@
 {% block content %}
 <div class="p-5 bg-secondary bg-opacity-25 vh-100">
           {% if comp %}
-               <h3 class="fs-3">Welcome {{ comp.company_name }}</h3>
+               <h3 class="fs-3">Welcome {{comp.hr_name}} ( {{ comp.company_name }} )  </h3>
           {% else %}
                <h3>No Company Found</h3>
           {% endif %}
 
+          <!-- main -->
+          <div class="row mt-4">
+
+          <div class="col g-3 pt-2">
+               <div class="card text-white shadow rounded-4 border-0 card-body" style="background: linear-gradient(135deg,#0582ca,#224abe);" >
+                    <h5>Total Drives</h5>
+                    <h3>{{ total_drives }}</h3>
+               </div>
+          </div>
+
+          <div class="col g-3 pt-2">
+               <div class="card text-white shadow rounded-4 border-0 card-body" style="background: linear-gradient(135deg,#0582ca,#224abe);">
+                    <h5>Open Drives</h5>
+                    <h3>{{ open_drives }}</h3>
+               </div>
+          </div>
+
+          <div class="col g-3 pt-2">
+               <div class="card text-white shadow rounded-4 border-0 card-body" style="background: linear-gradient(135deg,#0582ca,#224abe);" >
+                    <h5>Total Applications</h5>
+                    <h3>{{ total_applications }}</h3>
+               </div>
+          </div>
+
+          </div>
+
+          <!-- create drive -->
+          {% include 'company/create_drive.html'   %}
           
+          <!-- drive table -->
+          {% include 'company/drive_table.html'   %}
+
+
+
+
 </div>
 
 {% endblock %}
