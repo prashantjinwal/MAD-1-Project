@@ -1,0 +1,34 @@
+
+    {% if pending_drives %}
+    <table class="table table-bordered mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>ID</th>
+                <th>Company Name</th>
+                <th>job_title</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for Placement in pending_drives %}
+            <tr>
+                <td>{{ PlacementDrive.id }}</td>
+                <td>{{ PlacementDrive.company_name }}</td>
+                <td>{{ PlacementDrive.job_title}}</td>
+                <td>
+                    
+                    <a href="/admin/approve_drives/{{ PlacementDrive.id }}"
+                       class="btn btn-success btn-sm">Approve</a>
+
+                    <a href="/admin/drives_reject/{{ PlacementDrive.id }}"
+                       class="btn btn-danger btn-sm">Reject</a>
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-muted">No pending drives</p>
+    {% endif %}
+

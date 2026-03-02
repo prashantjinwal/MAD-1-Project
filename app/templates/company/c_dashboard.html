@@ -1,1 +1,14 @@
-<h2>company Dashboard</h2>
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-5 bg-secondary bg-opacity-25 vh-100">
+          {% if comp %}
+               <h3 class="fs-3">Welcome {{ comp.company_name }}</h3>
+          {% else %}
+               <h3>No Company Found</h3>
+          {% endif %}
+
+          
+</div>
+
+{% endblock %}

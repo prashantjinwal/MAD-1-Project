@@ -49,7 +49,7 @@ class Company(db.Model):
      approval_status = db.Column(db.String(20), default="pending")
 
      is_blacklisted = db.Column(db.Boolean, default=False)
-     user = db.relationship('User', backref="company", uselist=False)
+     user = db.relationship("User", backref=db.backref("company", uselist=False),uselist=False)
 
      def __repr__(self): 
           return f"<Company {self.company_name}>"
