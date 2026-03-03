@@ -1,7 +1,7 @@
 
 <div class="mt-4">
     {% if comp.approval_status == "approved" %}
-        <a href="/company/create-drive" class="btn btn-primary  ">
+        <a class="btn btn-primary" href="{{ url_for('company.create_drive') }}" >
             + Create Placement Drive
         </a>
     {% else %}

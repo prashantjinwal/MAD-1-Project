@@ -1,7 +1,10 @@
-from flask import render_template
+from datetime import datetime
+from flask import render_template, abort, url_for, redirect, flash, session, request
 from flask_login import login_required, current_user
 from app.company import company
-from app.models import  Company
+from app.models import  Company,  PlacementDrive
+from app import db
+
 
 @company.route('/company/dashboard')
 @login_required
@@ -32,3 +35,47 @@ def c_company():
         open_drives=open_drives,
         total_applications=total_applications
     )
+
+
+# drive logic
+@company.route('/company/create-drive', methods=['GET','POST'])
+@login_required
+def create_drive():
+    if current_user.role != 'company':
+        abort(403)
+    
+    comp = current_user.company
+    if not comp:
+        abort(404)
+    
+    if comp.approval_status != 'approved' :
+        flash('Your account is not approved yet.')
+        return redirect(url_for("company.c_company"))
+
+    if request.method == 'POST' :
+        job_title = request.form.get("job_title")
+        description = request.form.get("description")
+        eligibility = request.form.get("eligibility")
+        deadline = request.form.get("deadline")
+
+        # save data in new_drive
+        new_drive = PlacementDrive(
+            company_id=comp.id,
+            job_title=job_title,
+            description=description,
+            eligibility=eligibility,
+            deadline=datetime.strptime(deadline, "%Y-%m-%d"),
+            status="pending"
+        )
+
+        db.session.add(new_drive)
+        db.session.commit()
+
+        # if dirve sucessfully created
+        flash("Placement Drive Created Successfully!", "success")
+        return redirect(url_for("company.c_company"))
+    
+
+    return render_template("company/drive_popup.html", comp=comp)
+
+

@@ -31,6 +31,8 @@ def a_admin():
      # pending drives
      pending_drives = PlacementDrive.query.filter_by(status='pending').all()
      reject_drives = PlacementDrive.query.filter_by(status='rejected').all()
+
+     # placement_drive = PlacementDrive.query.all()
     
      return render_template('admin/a_dashboard.html',drive_view=drive_view, pending_drives=pending_drives, reject_drives=reject_drives, view=view, reject_companies=reject_companies, all_blocked_companies=all_blocked_companies, total_student=total_student, total_companies=total_companies,total_drives=total_drives,total_applications=total_applications,pending_companies=pending_companies, blacklist_companies=blacklist_companies)
 
@@ -101,6 +103,6 @@ def approve_drives(id):
         abort(403)
      
      drives = PlacementDrive.query.get_or_404(id)
-     drives.status = "approved"
+     drives.status = "open"
      db.session.commit()
      return redirect(url_for('admin.a_admin'))
