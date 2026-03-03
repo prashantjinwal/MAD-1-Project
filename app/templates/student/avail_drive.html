@@ -1,0 +1,31 @@
+    <h4>Available Placement Drives</h4>
+
+    {% if available_drives %}
+    <table class="table table-bordered table-hover mt-3">
+        <thead class="table-light">
+            <tr>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Deadline</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for drive in available_drives %}
+            <tr>
+                <td>{{ drive.company.company_name }}</td>
+                <td>{{ drive.job_title }}</td>
+                <td>{{ drive.deadline.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    <a href="/student/apply/{{ drive.id }}" 
+                       class="btn btn-success btn-sm">
+                       Apply
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-muted">No drives available.</p>
+    {% endif %}

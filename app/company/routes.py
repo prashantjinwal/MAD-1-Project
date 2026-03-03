@@ -86,3 +86,25 @@ def delete_drive(id):
     db.session.delete(drive)
     db.session.commit()
     return redirect(url_for("company.c_company"))
+
+
+# edit drives
+@company.route('/company/edit-drive/<int:id>', methods=['POST','GET'])
+@login_required
+def edit_drive(id):
+    curr_drive = PlacementDrive.query.get_or_404(id)
+
+    if request.method == "POST":
+        curr_drive.job_title = request.form.get("job_title")
+        curr_drive.description = request.form.get("description")
+        curr_drive.eligibility = request.form.get("eligibility")
+
+        deadline = request.form.get("deadline")
+        if deadline:
+            curr_drive.deadline = datetime.fromisoformat(deadline)
+
+        db.session.commit()
+        flash("Drive Updated Successfully!", "success")
+        return redirect(url_for("company.c_company"))
+
+    return render_template("company/edit_drive.html", curr_drive=curr_drive)
