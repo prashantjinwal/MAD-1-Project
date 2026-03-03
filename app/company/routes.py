@@ -79,3 +79,10 @@ def create_drive():
     return render_template("company/drive_popup.html", comp=comp)
 
 
+@company.route('/company/delete-drive/<int:id>',methods=['POST'])
+@login_required
+def delete_drive(id):
+    drive= PlacementDrive.query.get_or_404(id)
+    db.session.delete(drive)
+    db.session.commit()
+    return redirect(url_for("company.c_company"))

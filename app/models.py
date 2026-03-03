@@ -31,7 +31,8 @@ class Student(db.Model):
 
      is_blacklisted = db.Column(db.Boolean, default=False)
 
-     user = db.relationship('User',backref='student', uselist=False)
+     # user = db.relationship('User',backref='student', uselist=False)
+     user = db.relationship("User", backref=db.backref("student", uselist=False), uselist=False )
 
      def __repr__(self):
           return f"<Student {self.name}>"
