@@ -32,7 +32,7 @@
                     </td>
                     <td>{{ drive.applications|length }}</td>
                     <td>
-                        <a href="/company/view-applications/{{ drive.id }}"
+                        <a href="/company/view/{{ drive.id }}"
                            class="btn btn-info btn-sm">View</a>
 
                         <a href="{{ url_for('company.edit_drive', id=drive.id) }}" class="btn btn-warning btn-sm">

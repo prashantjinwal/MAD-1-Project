@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="p-5 bg-secondary bg-opacity-25 vh-100" >
+      <h3>Applicants for {{ drive.job_title }}</h3>
+     {% if drive.applications %}
+     <table class="table table-bordered table-hover mt-3 ">
+            <thead class="table-light">
+                <tr>
+                    <th>Id</th>   
+                    <th>Name</th>
+                    <th>roll_no</th>
+                    <th>branch</th>
+                    <th>CGPA</th>
+                    <th>Status</th>
+               </tr>
+            </thead>
+            <tbody>
+               {% for stu in drive.applications %}
+               <tr>
+                    <td>{{stu.student.id}}</td>
+                    <td>{{stu.student.name}}</td>
+                    <td>{{stu.student.roll_no}}</td>
+                    <td>{{stu.student.branch}}</td>
+                    <td>{{stu.student.cgpa}}</td>
+                    <td>{{stu.student.status}}</td>
+               </tr>
+               {% endfor %}
+            </tbody>
+     </table>
+     {% endif %}
+    
+</div>
+{% endblock %}

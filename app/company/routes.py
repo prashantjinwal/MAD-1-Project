@@ -2,7 +2,7 @@ from datetime import datetime
 from flask import render_template, abort, url_for, redirect, flash, session, request
 from flask_login import login_required, current_user
 from app.company import company
-from app.models import  Company,  PlacementDrive
+from app.models import  Company,  PlacementDrive, Application, Student
 from app import db
 
 
@@ -108,3 +108,11 @@ def edit_drive(id):
         return redirect(url_for("company.c_company"))
 
     return render_template("company/edit_drive.html", curr_drive=curr_drive)
+
+
+@company.route('/company/view/<int:id>')
+@login_required
+def view_application(id):
+    drive = PlacementDrive.query.get_or_404(id)
+    return render_template("company/view.html", drive=drive)
+
