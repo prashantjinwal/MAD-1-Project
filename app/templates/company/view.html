@@ -2,6 +2,10 @@
 
 {% block content %}
 <div class="p-5 bg-secondary bg-opacity-25 vh-100" >
+      <a href="{{ url_for('company.c_company') }}"
+               class="btn btn-secondary mb-3">
+               Back
+            </a>
       <h3>Applicants for {{ drive.job_title }}</h3>
      {% if drive.applications %}
      <table class="table table-bordered table-hover mt-3 ">
@@ -13,6 +17,7 @@
                     <th>branch</th>
                     <th>CGPA</th>
                     <th>Status</th>
+                    <th>Details</th>
                </tr>
             </thead>
             <tbody>
@@ -23,7 +28,11 @@
                     <td>{{stu.student.roll_no}}</td>
                     <td>{{stu.student.branch}}</td>
                     <td>{{stu.student.cgpa}}</td>
-                    <td>{{stu.student.status}}</td>
+                    <td>{{stu.status}}</td>
+                    <td><a href="{{ url_for('company.application_detail', app_id=stu.id) }}"
+                       class="btn btn-info">
+                        Details
+                    </a></td>
                </tr>
                {% endfor %}
             </tbody>

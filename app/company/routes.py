@@ -116,3 +116,46 @@ def view_application(id):
     drive = PlacementDrive.query.get_or_404(id)
     return render_template("company/view.html", drive=drive)
 
+@company.route("/company/application/<int:app_id>")
+@login_required
+def application_detail(app_id):
+
+    application = Application.query.get_or_404(app_id)
+
+    return render_template(
+        "company/application_detail.html",
+        application=application
+    )
+
+@company.route("/company/update-status/<int:app_id>/<string:status>")
+@login_required
+def update_application_status(app_id, status):
+
+    application = Application.query.get_or_404(app_id)
+
+    if current_user.role != "company":
+        abort(403)
+
+    valid_status = ["shortlisted", "selected", "rejected"]
+
+    if status not in valid_status:
+        abort(400)
+
+    application.status = status
+    db.session.commit()
+
+    flash(f"Application marked as {status}", "success")
+
+    return redirect(url_for("company.application_detail", app_id=app_id))
+
+
+# @company.route('/update_status/<int:app_id>', methods=['POST'])
+# @login_required
+# def update_status(app_id):
+#     application = Application.query.get_or_404(app_id)
+
+#     application.status = request.form.get("status")
+
+#     db.session.commit()
+
+#     return redirect(request.referrer)

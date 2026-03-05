@@ -20,13 +20,15 @@ def s_student():
     available_drives = PlacementDrive.query.filter_by(status="open").all()
     applications = Application.query.filter_by(student_id=stu.id).all()
     total_applied = len(applications)
+    total_shortlist_dives = Application.query.filter_by(status="shortlisted").count()
     
     return render_template(
         'student/s_dashboard.html',
         stu=stu,
         available_drives=available_drives,
         applications=applications,
-        total_applied=total_applied
+        total_applied=total_applied,
+        total_shortlist_dives=total_shortlist_dives
     )
 
 

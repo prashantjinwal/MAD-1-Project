@@ -57,7 +57,6 @@ class Company(db.Model):
 
 
 
-
 # Placement drive
 class PlacementDrive(db.Model):
      __tablename__ = "placement_drives"
