@@ -67,8 +67,8 @@ def stu_profile(id):
         curr_student.phone  = request.form.get("phone")
         curr_student.cgpa  = request.form.get("cgpa")
         # curr_student.user.email  = request.form.get("email")
-        email = request.form.get("email")
 
+        email = request.form.get("email")
         if email:
             curr_student.user.email = email
 
@@ -76,3 +76,14 @@ def stu_profile(id):
         return redirect (url_for("student.s_student"))
 
     return render_template ("student/profile.html", curr_student=curr_student)
+
+
+@student.route('/student/stu_history/<int:id>', methods=['POST','GET'])
+@login_required
+def stu_history(id):
+    if current_user.role != "student":
+        return "Unauthorized", 403
+
+    stu = Student.query.filter_by(user_id=current_user.id).first()
+    applications = Application.query.filter_by(student_id=stu.id).all()
+    return render_template("student/history.html",applications=applications)

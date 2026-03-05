@@ -8,13 +8,18 @@
           {% if current_user.role=='student' %}
           
                <a href="{{ url_for('student.s_student') }}" 
-                  class="btn btn-outline-light px-3 ">
+                  class="btn btn-outline-light px-3  me-3">
                   home
                </a>
 
                <a href="{{ url_for('student.stu_profile', id=current_user.student.id) }}" 
-                  class="btn btn-outline-light px-3 mx-3">
+                  class="btn btn-outline-light px-3 me-3">
                   Profile
+               </a>
+
+               <a href="{{ url_for('student.stu_history', id=current_user.student.id) }}" 
+                  class="btn btn-outline-light px-3 me-3">
+                  history
                </a>
 
           {% endif %}
