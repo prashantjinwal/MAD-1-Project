@@ -1,4 +1,4 @@
-from flask import render_template, redirect
+from flask import render_template, redirect, request, url_for
 from flask_login import login_required, current_user
 from app.student import student
 from app.models import Student, PlacementDrive, Application
@@ -54,3 +54,25 @@ def apply_drive(drive_id):
      db.session.commit()
 
      return redirect('/student/dashboard')
+
+
+@student.route('/student/stu_profile/<int:id>', methods=['POST','GET'])
+@login_required
+def stu_profile(id):
+    curr_student = Student.query.get_or_404(id)
+    if request.method == "POST":
+        curr_student.name = request.form.get("name")
+        curr_student.roll_no  = request.form.get("roll_no")
+        curr_student.branch  = request.form.get("branch")
+        curr_student.phone  = request.form.get("phone")
+        curr_student.cgpa  = request.form.get("cgpa")
+        # curr_student.user.email  = request.form.get("email")
+        email = request.form.get("email")
+
+        if email:
+            curr_student.user.email = email
+
+        db.session.commit()
+        return redirect (url_for("student.s_student"))
+
+    return render_template ("student/profile.html", curr_student=curr_student)
