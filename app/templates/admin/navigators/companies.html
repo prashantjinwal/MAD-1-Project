@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<div class="card shadow p-4 mt-5 mx-5">
+    <div class="d-flex justify-content-between">
+          <h4>Pending drives</h4> 
+          <form method="GET" action="{{ url_for('admin.companies') }}" class="d-flex">
+               <input type="text" name="search" placeholder="Search by company name" class="form-control me-2" value="{{ request.args.get('search','') }}">
+               <button class="btn btn-primary">Search</button>
+          </form>
+    </div>
+    {% if companies %}
+    <table class="table table-bordered mt-3">
+        <thead class="table-secondary">
+            <tr>
+                <th>ID</th>
+                <th>Company Name</th>
+                <th>Email</th>
+                <th>HR Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for company in companies %}
+            <tr>
+                <td>{{ company.id }}</td>
+                <td>{{ company.company_name }}</td>
+                <td>{{ company.user.email }}</td>
+                <td>{{ company.hr_name }}</td>
+                <td>
+                    {% if company.approval_status != 'approved'  %}
+                         <a href="/admin/approve/{{ company.id }}"class="btn btn-success btn-sm">Approve</a>                         
+                    {% endif %}
+
+                    {% if company.approval_status != 'rejected'  %}
+                         <a href="/admin/reject/{{ company.id }}" class="btn btn-danger btn-sm">Reject</a>
+                    {% endif %}
+
+                    {% if company.approval_status != 'blacklisted'  %}
+                         <a href="/admin/blacklist/{{ company.id }}" class="btn btn-dark btn-sm">blacklist</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-muted">No pending companies</p>
+    {% endif %}
+</div>
+{% endblock %}

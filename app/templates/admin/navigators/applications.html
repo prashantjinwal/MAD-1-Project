@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="p-4  bg-opacity-25 " >
+<div class="card shadow p-4 mt-5">
+     
+     <div class="d-flex justify-content-between">
+          <h3 class="">Applicants</h3>
+          <form method="GET" action="{{ url_for('admin.applicants') }}" class="d-flex p-3">
+               <input type="text"name="search" class="form-control me-2" placeholder="Search student, roll no, company..." value="{{ request.args.get('search','') }}">
+               <button class="btn btn-primary">Search</button>
+          </form>
+     </div>
+
+<table class="table table-hover align-middle">
+     <thead class="table-secondary">
+          <tr>
+               <th>ID</th>
+               <th>Student Name</th>
+               <th>Roll No</th>
+               <th>Company</th>
+               <th>Job Role</th>
+               <th>Applied On</th>
+               <th>Status</th>
+
+          </tr>
+     </thead>
+<tbody>
+{% for app in applicants %}
+     <tr>
+          <td>{{ app.id }}</td>
+          <td>{{ app.student.name }}</td>
+          <td>{{ app.student.roll_no }}</td>
+          <td>{{ app.drive.company.company_name }}</td>
+          <td>{{ app.drive.job_title }}</td>
+          <td>{{ app.applied_on.strftime('%d %b %Y') }}</td>
+          <td>
+               {% if app.status == "applied" %}
+                    <span class="badge bg-primary">Applied</span>
+
+               {% elif app.status == "selected" %}
+                    <span class="badge bg-success">Selected</span>
+               {% elif app.status == "rejected" %}
+                    <span class="badge bg-danger">Rejected</span>
+               {% else %}
+                    <span class="badge bg-secondary">{{ app.status }}</span>
+               {% endif %}
+          </td>
+     </tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,22 @@
+<!-- approveal company -->
+     <div class="card shadow p-4 mt-5">
+          <div class="d-flex justify-content-between"><h4>Pending Companies</h4> 
+               <span>{% if view == "blacklist" %}
+                         <a class="btn btn-primary btn-sm" href="{{ url_for('admin.a_admin') }}">
+                              View Pending
+                         </a>
+                    {% else %}
+                         <a class="btn btn-dark btn-sm" href="{{ url_for('admin.a_admin', view='blacklist') }}">
+                              View Blacklisted
+                         </a>
+                    {% endif %}</span> 
+          </div>
+          {% if view == "blacklist" %}
+               {% include 'admin/blacklist_edit.html'   %}
+          {% else %}
+               {% include 'admin/pending_card.html'  %}
+          {% endif %}
+               
+     </div>
+
+     

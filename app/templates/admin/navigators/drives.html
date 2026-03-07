@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block content %}
+ <div class="card shadow p-4 mt-5">
+    <div class="d-flex justify-content-between">
+          <h4>Drives</h4>
+
+          <form method="GET" action="{{ url_for('admin.drives') }}" class="d-flex">
+               <input type="text" name="search" placeholder="Search by job and company" class="form-control me-2" value="{{ request.args.get('search','') }}">
+               <button class="btn btn-primary">Search</button>
+          </form>
+    </div>
+    {% if drives %}
+    <table class="table table-bordered mt-3">
+        <thead class="table-secondary">
+            <tr>
+                <th>ID</th>
+                <th>Company Name</th>
+                <th>job_title</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for drive in drives %}
+            <tr>
+                <td>{{ drive.id }}</td>
+                <td>{{ drive.company.company_name }}</td>
+                <td>{{ drive.job_title}}</td>
+                <td>
+                    {% if drive.status != 'open' %}
+                    <a href=""
+                       class="btn btn-success btn-sm">Approve</a>                         
+                    {% else %}
+                    <a href=""
+                       class="btn btn-danger btn-sm">Reject</a>                         
+                    {% endif %}
+
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+        <p class="text-muted">No pending drives</p>
+    {% endif %}
+ </div>
+{% endblock %}

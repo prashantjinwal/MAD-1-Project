@@ -52,6 +52,33 @@
 
           {% endif %}
 
+          <!-- admin -->
+          {% if current_user.role=='admin' %}
+          
+               <a href="{{ url_for('admin.a_admin') }}" 
+                  class="btn btn-outline-light px-3 me-3 ">
+                  Dashboard
+               </a>
+
+               <a href="{{ url_for('admin.students') }}" 
+                  class="btn btn-outline-light px-3 me-3">
+                  Students
+               </a>
+               <a href="{{ url_for('admin.companies') }}" 
+                  class="btn btn-outline-light px-3 me-3">
+                  Companies
+               </a>
+               <a href="{{ url_for('admin.drives') }}" 
+                  class="btn btn-outline-light px-3 me-3">
+                  Placement drives
+               </a>
+               <a href="{{ url_for('admin.applicants') }}" 
+                  class="btn btn-outline-light px-3 me-3">
+                  Applications
+               </a>
+
+          {% endif %}
+
           <a href="{{ url_for('auth.logout') }}" class="btn btn-light px-3" >Log Out</a>
      </div>    
      

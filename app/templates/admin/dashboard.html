@@ -1,16 +1,8 @@
-{% extends 'base.html' %}
+{% extends "admin/a_admin.html" %}
 
-{% block content %}
-     <div class="p-5 bg-secondary bg-opacity-25 vh-100">
-          <div>
-               <h3 class="fs-3">Admin dashboard</h3>
-          </div>
-
-          <!-- count start -->
-          <div class="bg-light p-4 rounded-4 " >
-
-              <div class="row g-4 pt-2">
-
+{% block stats %}
+    <div class="bg-light p-4 rounded-4 " >
+     <div class="row g-4 pt-2">
                <!-- Total student -->
                <div class="col-md-3">
                <div class="card text-white shadow rounded-4 border-0" style="background: linear-gradient(135deg,#0582ca,#224abe);">
@@ -51,47 +43,7 @@
                </div>
                </div>
 
-               
-              
-
-
-               </div>
-               </div>
-               <!-- count end -->
-
-               <!-- approveal company -->
-               <div class="card shadow p-4 mt-4">
-               <div class="d-flex justify-content-between"><h4>Pending Companies</h4> 
-                    <span>{% if view == "blacklist" %}
-                              <a class="btn btn-primary btn-sm" href="{{ url_for('admin.a_admin') }}">
-                                   View Pending
-                              </a>
-                         {% else %}
-                              <a class="btn btn-dark btn-sm" href="{{ url_for('admin.a_admin', view='blacklist') }}">
-                                   View Blacklisted
-                              </a>
-                    {% endif %}</span> 
-               </div>
-               {% if view == "blacklist" %}
-                    {% include 'admin/blacklist_edit.html'   %}
-               {% else %}
-                    {% include 'admin/pending_c.html'  %}
-               {% endif %}
-               
-               </div>
-
-               <!-- pending drives -->
-               <div class="card shadow p-4 mt-4">
-               <div class="d-flex justify-content-between"><h4>Pending drives</h4> 
-               </div>
-
-               {% include 'admin/drives.html'   %}
-
-               </div>
-
-
-          </div>
-          </div>
 
      </div>
+</div>
 {% endblock %}

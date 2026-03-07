@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+     <div class="p-5 bg-secondary bg-opacity-25 ">
+          <div class="py-3"> 
+               <h3 class="fs-3">Admin dashboard</h3>
+          </div>
+
+          <!-- count start -->
+          {% block stats %}    
+          {% endblock %}
+
+          <!-- pending companies -->
+          {% include 'admin/pending_company.html'   %}
+
+          <!-- drives -->
+          {% include 'admin/drives.html'   %}
+         
+
+
+     </div>
+{% endblock %}
