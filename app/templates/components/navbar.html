@@ -9,23 +9,26 @@
           {% if current_user.role=='student' %}
           
                <a href="{{ url_for('student.s_student') }}" 
-                  class="btn btn-outline-light px-3  me-3">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/student/dashboard' %}active{% endif %}  ">
                   Dashboard
                </a>
-               <a href="{{ 'student/my_application' }}" 
-                  class="btn btn-outline-light px-3  me-3">
+
+               <a href="{{ url_for('student.explore') }}" 
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/student/explore' %}active{% endif %}  ">
+                  Explore drives
+               </a>
+
+               <a href="{{ url_for('student.application') }}" 
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/student/application' %}active{% endif %}">
                   My Applications
                </a>
 
                <a href="{{ url_for('student.stu_profile', id=current_user.student.id) }}" 
-                  class="btn btn-outline-light px-3 me-3">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.endpoint == 'student.stu_profile' %}active{% endif %}  ">
                   Profile
                </a>
 
-               <a href="{{ url_for('student.stu_history', id=current_user.student.id) }}" 
-                  class="btn btn-outline-light px-3 me-3">
-                  history
-               </a>
+
 
           {% endif %}
 
@@ -33,20 +36,20 @@
           {% if current_user.role=='company' %}
           
                <a href="{{ url_for('company.c_company') }}" 
-                  class="btn btn-outline-light px-3 me-3 ">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/company/dashboard' %}active{% endif %}  ">
                   Dashboard
                </a>
 
                <a href="{{ url_for('company.create_drive') }}" 
-                  class="btn btn-outline-light px-3 me-3">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/company/create-drive' %}active{% endif %} ">
                   Create Drive
                </a>
                <a href="{{ url_for('company.placement_drive') }}" 
-                  class="btn btn-outline-light px-3 me-3">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/company/placementdrive' %}active{% endif %} ">
                   Placement Drives
                </a>
                <a href="{{ url_for('company.com_profile', id=current_user.company.id) }}" 
-                  class="btn btn-outline-light px-3 me-3">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.endpoint == 'company.com_profile' %}active{% endif %} ">
                   Profile
                </a>
 
@@ -56,24 +59,24 @@
           {% if current_user.role=='admin' %}
           
                <a href="{{ url_for('admin.a_admin') }}" 
-                  class="btn btn-outline-light px-3 me-3 ">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/admin/dashboard' %}active{% endif %}  ">
                   Dashboard
                </a>
 
                <a href="{{ url_for('admin.students') }}" 
-                  class="btn btn-outline-light px-3 me-3">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/admin/students' %}active{% endif %}  ">
                   Students
                </a>
                <a href="{{ url_for('admin.companies') }}" 
-                  class="btn btn-outline-light px-3 me-3">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/admin/companies' %}active{% endif %}  ">
                   Companies
                </a>
                <a href="{{ url_for('admin.drives') }}" 
-                  class="btn btn-outline-light px-3 me-3">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/admin/drives' %}active{% endif %}  ">
                   Placement drives
                </a>
                <a href="{{ url_for('admin.applicants') }}" 
-                  class="btn btn-outline-light px-3 me-3">
+                  class="nav-btn btn-outline-light px-3 me-3 {% if request.path == '/admin/applicants' %}active{% endif %}  ">
                   Applications
                </a>
 

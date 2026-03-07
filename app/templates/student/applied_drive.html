@@ -16,13 +16,15 @@
                 <td>{{ app.drive.company.company_name }}</td>
                 <td>{{ app.drive.job_title }}</td>
                 <td>
-                    {% if app.status == "selected" %}
-                        <span class="badge bg-success">Selected</span>
-                    <!-- {% elif app.status == "rejected" %}
-                        <span class="badge bg-danger">Rejected</span> -->
-                    {% else %}
-                        <span class="badge bg-secondary">{{ app.status }}</span>
-                    {% endif %}
+                {% if app.status == "selected" %}
+                    <span class="badge bg-success text-dark">Selected</span>
+                {% elif app.status == "rejected" %}
+                    <span class="badge bg-danger text-dark">Rejected</span>
+                {% elif app.status == "shortlisted" %}
+                    <span class="badge bg-warning text-dark">shortlisted</span>
+                {% else %}
+                    <span class="badge bg-info text-dark">{{ app.status }}</span>
+                {% endif %}
                 </td>
                 <td>{{ app.applied_on.strftime('%Y-%m-%d') }}</td>
             </tr>

@@ -1,7 +1,6 @@
 <div class="card shadow p-4 mt-5">
     <h4 class="">Available Placement Drives</h4>
-    {% if available_drives %}
-
+    {% if drives %}
     <table class="table table-bordered table-hover mt-3">
         <thead class="table-light">
             <tr>
@@ -12,7 +11,7 @@
             </tr>
         </thead>
         <tbody>
-            {% for drive in available_drives %}
+            {% for drive in drives %}
             <tr>
                 <td>{{ drive.company.company_name }}</td>
                 <td>{{ drive.job_title }}</td>

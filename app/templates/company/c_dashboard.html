@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-5 bg-secondary bg-opacity-25 vh-100">
+<div class="p-5 bg-secondary bg-opacity-25 ">
           {% if comp %}
                <h3 class="fs-3">Welcome {{comp.hr_name}} ( {{ comp.company_name }} )  </h3>
           {% else %}
@@ -9,8 +9,8 @@
           {% endif %}
 
           <!-- main -->
-          <div class="row mt-4">
-
+     <div class="bg-light p-4 rounded-4 mt-4 " >
+          <div class="row g-4 pt-2 ">
           <div class="col g-3 pt-2">
                <div class="card text-white shadow rounded-4 border-0 card-body" style="background: linear-gradient(135deg,#0582ca,#224abe);" >
                     <h5>Total Drives</h5>
@@ -33,14 +33,14 @@
           </div>
 
           </div>
+     </div>
 
           <!-- create drive -->
           <!-- {% include 'company/create_drive.html'   %} -->
           
           <!-- drive table -->
-          <div class="card shadow p-4 mt-4">
-               {% include 'company/drive_table.html'   %}
-          </div>
+          {% include 'company/drive_table.html'   %}
+          
 
 
 

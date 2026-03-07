@@ -1,7 +1,7 @@
 from flask import render_template, redirect, request, url_for
 from flask_login import login_required, current_user
 from app.student import student
-from app.models import Student, PlacementDrive, Application
+from app.models import Student, PlacementDrive, Application,Company
 from app import db
 
 
@@ -94,7 +94,6 @@ def stu_history(id):
 @student.route('/student/my_application')
 @login_required
 def my_application():
-
     if current_user.role != "student":
         return "Unauthorized", 403
 
@@ -102,5 +101,74 @@ def my_application():
 
     if not stu:
         return "Student profile not found", 404
+    
+    # student ne jin drives me apply kiya hai
+    applied_apps = Application.query.filter_by(student_id=stu.id).all()
 
-    return render_template('student/my_application.html')
+    # un drives ke ids
+    applied_drive_ids = [app.drive_id for app in applied_apps]
+
+    # open drives jo student ne apply nahi ki
+    available_drives = PlacementDrive.query.filter(
+        PlacementDrive.status == "open",
+        ~PlacementDrive.id.in_(applied_drive_ids)
+    ).all()
+
+    return render_template('student/my_application.html', drives=available_drives)
+
+
+
+@student.route('/student/application')
+@login_required
+def application():
+    if current_user.role != 'student':
+        return "unauthorized", 403
+
+    stu = Student.query.filter_by(user_id=current_user.id).first()
+
+    search = request.args.get("search")
+
+    if search:
+        myapp = Application.query.join(PlacementDrive).filter(
+            Application.student_id == stu.id,
+            PlacementDrive.job_title.ilike(f"%{search}%")
+        ).all()
+    else:
+        myapp = Application.query.filter_by(student_id=stu.id).all()
+
+    return render_template(
+        'student/navigator/application.html',
+        myapp=myapp
+    )
+
+
+@student.route('/student/explore')
+@login_required
+def explore():
+
+    if current_user.role != "student":
+        return "Unauthorized", 403
+    
+    stu = Student.query.filter_by(user_id=current_user.id).first()
+    search = request.args.get("search")
+
+    if search:
+        available_drives = PlacementDrive.query.join(Company).filter(
+            PlacementDrive.status == "open",
+            db.or_(
+                PlacementDrive.job_title.ilike(f"%{search}%"),
+                Company.company_name.ilike(f"%{search}%")
+            )
+        ).all()
+
+    else:
+        available_drives = PlacementDrive.query.filter_by(status="open").all()
+
+    applied_drives = Application.query.filter_by(student_id=stu.id).all()
+    applied_drive_ids = [x.id for x in applied_drives]
+
+    return render_template(
+        'student/navigator/exploredrives.html',
+        available_drives=available_drives, 
+        applied_drive_ids = applied_drive_ids
+    )
