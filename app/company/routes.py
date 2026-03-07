@@ -36,6 +36,30 @@ def c_company():
         total_applications=total_applications
     )
 
+# placement drive
+@company.route('/company/placementdrive')
+@login_required
+def placement_drive():
+
+    if current_user.role != "company":
+        return "Unauthorized", 403
+
+    if not current_user.company:
+        return "Company profile not found", 404
+
+    comp = current_user.company
+
+    # Drives of this company
+    drives = comp.drives
+
+    return render_template(
+        'company/placement_drives.html',
+        comp=comp,
+        drives=drives,
+        
+    )
+
+
 
 # drive logic
 @company.route('/company/create-drive', methods=['GET','POST'])
@@ -159,3 +183,24 @@ def update_application_status(app_id, status):
 #     db.session.commit()
 
 #     return redirect(request.referrer)
+
+@company.route('/company/com_profile/<int:id>', methods=['POST','GET'])
+@login_required
+def com_profile(id):
+    curr_company = Company.query.get_or_404(id)
+    if request.method == "POST":
+        curr_company.company_name = request.form.get("company_name")
+        curr_company.hr_name  = request.form.get("hr_name")
+        curr_company.website  = request.form.get("website")
+        curr_company.approval_status  = request.form.get("approval_status")
+        # curr_company.email  = request.form.get("email")
+
+
+        email = request.form.get("email")
+        if email:
+            curr_company.user.email = email
+
+        db.session.commit()
+        return redirect (url_for("company.c_company"))
+
+    return render_template ("company/profile.html", curr_company=curr_company)

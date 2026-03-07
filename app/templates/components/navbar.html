@@ -5,11 +5,16 @@
 
      {% if current_user.is_authenticated %}
      <div class="d-flex ">
+          <!-- role == student -->
           {% if current_user.role=='student' %}
           
                <a href="{{ url_for('student.s_student') }}" 
                   class="btn btn-outline-light px-3  me-3">
-                  home
+                  Dashboard
+               </a>
+               <a href="{{ 'student/my_application' }}" 
+                  class="btn btn-outline-light px-3  me-3">
+                  My Applications
                </a>
 
                <a href="{{ url_for('student.stu_profile', id=current_user.student.id) }}" 
@@ -20,6 +25,29 @@
                <a href="{{ url_for('student.stu_history', id=current_user.student.id) }}" 
                   class="btn btn-outline-light px-3 me-3">
                   history
+               </a>
+
+          {% endif %}
+
+          <!-- company -->
+          {% if current_user.role=='company' %}
+          
+               <a href="{{ url_for('company.c_company') }}" 
+                  class="btn btn-outline-light px-3 me-3 ">
+                  Dashboard
+               </a>
+
+               <a href="{{ url_for('company.create_drive') }}" 
+                  class="btn btn-outline-light px-3 me-3">
+                  Create Drive
+               </a>
+               <a href="{{ url_for('company.placement_drive') }}" 
+                  class="btn btn-outline-light px-3 me-3">
+                  Placement Drives
+               </a>
+               <a href="{{ url_for('company.com_profile', id=current_user.company.id) }}" 
+                  class="btn btn-outline-light px-3 me-3">
+                  Profile
                </a>
 
           {% endif %}

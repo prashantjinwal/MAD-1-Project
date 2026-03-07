@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+
+{% block content %}
+     
+<div class="container mt-5">
+    <div class="card shadow-lg border-0 rounded-4 w-50 mx-auto">
+        <div class="card-body p-4">
+
+            <h3 class="mb-4 text-primary">
+               Update Profile
+            </h3>
+     <form method="POST"  >
+
+          <div class="row g-3">
+               <!-- name -->
+               <div class="col-md-12">
+                    <label class="form-label fw-semibold text-danger">
+                         Company Name
+                    </label>
+                    <input type="text"
+                           name="company_name"
+                           class="form-control "
+                           value="{{ curr_company.company_name }}"
+                           readonly
+                           onclick="alert('You cannot change this field')"
+                           required>
+               </div>
+               <!-- Roll Number -->
+               <div class="col-md-12">
+                    <label class="form-label fw-semibold">
+                         HR name
+                    </label>
+                    <input type="text"
+                           name="hr_name"
+                           class="form-control"
+                           value="{{ curr_company.hr_name }}"
+                           required>
+               </div>
+
+               <!-- Branch -->
+               <div class="col-md-12">
+                    <label class="form-label fw-semibold">
+                         Website
+                    </label>
+                    <input type="text"
+                           name="website"
+                           class="form-control"
+                           value="{{ curr_company.website }}"
+                           required>
+               </div>
+
+               <!-- CGPA -->
+               <div class="col-md-12">
+                    <label class="form-label fw-semibold">
+                         Email
+                    </label>
+                    <input type="email"
+                           name="email"
+                           class="form-control"
+                           value="{{ curr_company.user.email }}"
+                           required>
+               </div>
+
+               <!-- Phone -->
+               <div class="col-md-12">
+                    <label class="form-label fw-semibold text-danger">
+                         Approval status
+                    </label>
+                    <input type="text"
+                           name="approval_status"
+                           class="form-control  "
+                           value="{{ curr_company.approval_status }}"
+                           readonly
+                           onclick="alert('You cannot change this field')"
+                           required>
+               </div>
+
+          
+          
+          </div>
+
+               
+                <!-- butn -->
+                <div class="d-flex justify-content-between mt-5 ">
+                    <a href=""
+                       class="btn btn-secondary">
+                        Cancel
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-success px-4">
+                        Update
+                    </button>
+                </div> 
+     </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

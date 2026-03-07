@@ -20,7 +20,8 @@ def s_student():
     available_drives = PlacementDrive.query.filter_by(status="open").all()
     applications = Application.query.filter_by(student_id=stu.id).all()
     total_applied = len(applications)
-    total_shortlist_dives = Application.query.filter_by(status="shortlisted").count()
+    total_shortlist_dives = Application.query.filter_by(status="shortlisted",student_id=stu.id).count()
+    total_selected_dives = Application.query.filter_by(status="selected",student_id=stu.id).count()
     
     return render_template(
         'student/s_dashboard.html',
@@ -28,7 +29,8 @@ def s_student():
         available_drives=available_drives,
         applications=applications,
         total_applied=total_applied,
-        total_shortlist_dives=total_shortlist_dives
+        total_shortlist_dives=total_shortlist_dives,
+        total_selected_dives=total_selected_dives
     )
 
 
@@ -87,3 +89,18 @@ def stu_history(id):
     stu = Student.query.filter_by(user_id=current_user.id).first()
     applications = Application.query.filter_by(student_id=stu.id).all()
     return render_template("student/history.html",applications=applications)
+
+
+@student.route('/student/my_application')
+@login_required
+def my_application():
+
+    if current_user.role != "student":
+        return "Unauthorized", 403
+
+    stu = Student.query.filter_by(user_id=current_user.id).first()
+
+    if not stu:
+        return "Student profile not found", 404
+
+    return render_template('student/my_application.html')
