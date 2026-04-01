@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
- <div class="card shadow p-4 mt-5">
+
+ <div class="card shadow p-4 mt-5 mx-4 ">
     <div class="d-flex justify-content-between">
           <h4>Drives</h4>
 
@@ -27,10 +28,10 @@
                 <td>{{ drive.job_title}}</td>
                 <td>
                     {% if drive.status != 'open' %}
-                    <a href=""
+                    <a href="/admin/approve_drives/{{ drive.id }}"
                        class="btn btn-success btn-sm">Approve</a>                         
                     {% else %}
-                    <a href=""
+                    <a href="/admin/drives_reject/{{ drive.id }}"
                        class="btn btn-danger btn-sm">Reject</a>                         
                     {% endif %}
 

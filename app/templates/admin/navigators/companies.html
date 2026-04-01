@@ -19,6 +19,7 @@
                 <th>Email</th>
                 <th>HR Name</th>
                 <th>Action</th>
+                <th>Status</th>
             </tr>
         </thead>
         <tbody>
@@ -29,7 +30,7 @@
                 <td>{{ company.user.email }}</td>
                 <td>{{ company.hr_name }}</td>
                 <td>
-                    {% if company.approval_status != 'approved'  %}
+                    {% if company.approval_status != 'approved'   %}
                          <a href="/admin/approve/{{ company.id }}"class="btn btn-success btn-sm">Approve</a>                         
                     {% endif %}
 
@@ -41,8 +42,13 @@
                          <a href="/admin/blacklist/{{ company.id }}" class="btn btn-dark btn-sm">blacklist</a>
                     {% endif %}
                 </td>
+
+                <td>
+                    {{company.approval_status}}
+                </td>
             </tr>
             {% endfor %}
+            
         </tbody>
     </table>
     {% else %}

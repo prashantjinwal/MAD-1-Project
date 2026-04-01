@@ -24,8 +24,8 @@ def a_admin():
     blacklist_companies = Company.query.filter_by(approval_status='blacklisted').all()
     # pending companies
     pending_companies = Company.query.filter_by(approval_status='pending').all()
-    reject_companies = Company.query.filter_by(approval_status='rejected').all()
-    all_blocked_companies = blacklist_companies + reject_companies
+   #  reject_companies = Company.query.filter_by(approval_status='rejected').all()
+    all_blocked_companies = blacklist_companies 
 
     #placement drives
     drive_view = request.args.get("drive_view")
@@ -159,10 +159,14 @@ def students():
 @admin.route('/admin/deactivate_student/<int:id>')
 @login_required
 def deactivate_student(id):
-     # if current_user.role != 'admin':
-     #    abort(403)
+     if current_user.role != 'admin':
+        abort(403)
      stu = Student.query.get_or_404(id)
-     stu.is_blacklisted = True
+
+     if stu.is_blacklisted == True :
+         stu.is_blacklisted = False
+     else :
+         stu.is_blacklisted = True
      db.session.commit()
      return redirect(request.referrer)
 

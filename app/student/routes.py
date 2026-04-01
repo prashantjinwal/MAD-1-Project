@@ -37,7 +37,8 @@ def s_student():
 @student.route('/student/apply/<int:drive_id>')
 @login_required
 def apply_drive(drive_id):
-
+     if current_user.role != "student":
+        return "Unauthorized", 403
      stu = Student.query.filter_by(user_id=current_user.id).first()
      existing = Application.query.filter_by(
          student_id = stu.id,
@@ -165,7 +166,7 @@ def explore():
         available_drives = PlacementDrive.query.filter_by(status="open").all()
 
     applied_drives = Application.query.filter_by(student_id=stu.id).all()
-    applied_drive_ids = [x.id for x in applied_drives]
+    applied_drive_ids = [x.drive_id for x in applied_drives] 
 
     return render_template(
         'student/navigator/exploredrives.html',
