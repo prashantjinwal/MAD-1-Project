@@ -40,17 +40,17 @@
 
           <h5>Update Status</h5>
 
-               <a href="{{ url_for('company.update_application_status', app_id=application.id, status='shortlisted') }}" class="btn btn-warning btn-sm">
-                    Shortlist
-               </a>
+                <form action="{{ url_for('company.update_application_status', app_id=application.id, status='shortlisted') }}" method="POST" style="display:inline;">
+                    <button class="btn btn-warning btn-sm">Shortlist</button>
+                </form>
 
-               <a href="{{ url_for('company.update_application_status', app_id=application.id, status='selected') }}" class="btn btn-success btn-sm">
-                    Select
-               </a>
+                <form action="{{ url_for('company.update_application_status', app_id=application.id, status='selected') }}" method="POST" style="display:inline;">
+                    <button class="btn btn-success btn-sm">Select</button>
+                </form>
 
-               <a href="{{ url_for('company.update_application_status', app_id=application.id, status='rejected') }}" class="btn btn-danger btn-sm">
-                    Reject
-               </a>
+                <form action="{{ url_for('company.update_application_status', app_id=application.id, status='rejected') }}" method="POST" style="display:inline;">
+                    <button class="btn btn-danger btn-sm">Reject</button>
+                </form>
 
                <hr>
 

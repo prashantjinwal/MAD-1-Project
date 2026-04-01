@@ -17,7 +17,7 @@ def s_student():
     if not stu:
         return "Student profile not found", 404
 
-    available_drives = PlacementDrive.query.filter_by(status="open").all()
+    available_drives = PlacementDrive.query.filter_by(status="open").count()
     applications = Application.query.filter_by(student_id=stu.id).all()
     total_applied = len(applications)
     total_shortlist_dives = Application.query.filter_by(status="shortlisted",student_id=stu.id).count()
@@ -39,6 +39,11 @@ def s_student():
 def apply_drive(drive_id):
      if current_user.role != "student":
         return "Unauthorized", 403
+     
+     drive = PlacementDrive.query.get_or_404(drive_id)
+     if drive.status != "open":
+        return "Drive is not open", 400
+     
      stu = Student.query.filter_by(user_id=current_user.id).first()
      existing = Application.query.filter_by(
          student_id = stu.id,
@@ -52,17 +57,22 @@ def apply_drive(drive_id):
          student_id = stu.id,
          drive_id = drive_id
      )
-
      db.session.add(new_app)
      db.session.commit()
-
-     return redirect('/student/dashboard')
+     
+     return redirect(url_for('student.s_student'))
 
 
 @student.route('/student/stu_profile/<int:id>', methods=['POST','GET'])
 @login_required
 def stu_profile(id):
+    if current_user.role != "student":
+        return "Unauthorized", 403
     curr_student = Student.query.get_or_404(id)
+
+    if curr_student.user_id != current_user.id:
+        return "Forbidden", 403
+    
     if request.method == "POST":
         curr_student.name = request.form.get("name")
         curr_student.roll_no  = request.form.get("roll_no")
@@ -81,13 +91,16 @@ def stu_profile(id):
     return render_template ("student/profile.html", curr_student=curr_student)
 
 
-@student.route('/student/stu_history/<int:id>', methods=['POST','GET'])
+@student.route('/student/stu_history/<int:id>', methods=['GET'])
 @login_required
-def stu_history(id):
+def stu_history():
     if current_user.role != "student":
         return "Unauthorized", 403
 
     stu = Student.query.filter_by(user_id=current_user.id).first()
+    if not stu:                                            
+        return "Student profile not found", 404
+    
     applications = Application.query.filter_by(student_id=stu.id).all()
     return render_template("student/history.html",applications=applications)
 

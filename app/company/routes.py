@@ -107,6 +107,9 @@ def create_drive():
 @login_required
 def delete_drive(id):
     drive= PlacementDrive.query.get_or_404(id)
+    if drive.company_id != current_user.company.id:
+        abort(403)
+
     db.session.delete(drive)
     db.session.commit()
     return redirect(url_for("company.c_company"))
@@ -117,6 +120,8 @@ def delete_drive(id):
 @login_required
 def edit_drive(id):
     curr_drive = PlacementDrive.query.get_or_404(id)
+    if curr_drive.company_id != current_user.company.id:
+        abort(403)
 
     if request.method == "POST":
         curr_drive.job_title = request.form.get("job_title")
@@ -151,7 +156,7 @@ def application_detail(app_id):
         application=application
     )
 
-@company.route("/company/update-status/<int:app_id>/<string:status>")
+@company.route("/company/update-status/<int:app_id>/<string:status>", methods=["POST"])
 @login_required
 def update_application_status(app_id, status):
 
