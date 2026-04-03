@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from flask_login import UserMixin
 from app import db
 
@@ -54,6 +54,8 @@ class Company(db.Model):
 
      def __repr__(self): 
           return f"<Company {self.company_name}>"
+     
+
 
 
 
@@ -74,6 +76,16 @@ class PlacementDrive(db.Model):
 
      def __repr__(self):
           return f"<Drive {self.job_title}>"
+     
+     @property
+     def is_expired(self):
+        if self.deadline:
+            return date.today() > self.deadline
+        return False
+
+     def auto_close(self):
+        if self.is_expired and self.status == 'open':
+            self.status = 'closed'
 
 
 

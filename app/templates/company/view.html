@@ -1,13 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<div class="p-5 bg-secondary bg-opacity-25 vh-100" >
+<div class="p-5 bg-opacity-25 container shadow p-2 mt-4" >
       <a href="{{ url_for('company.c_company') }}"
                class="btn btn-secondary mb-3">
                Back
-            </a>
+      </a>
       <h3>Applicants for {{ drive.job_title }}</h3>
      {% if drive.applications %}
+     
      <table class="table table-bordered table-hover mt-3 ">
             <thead class="table-light">
                 <tr>
@@ -37,6 +38,7 @@
                {% endfor %}
             </tbody>
      </table>
+     
      {% endif %}
     
 </div>

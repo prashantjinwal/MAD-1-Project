@@ -1,9 +1,10 @@
-from flask import render_template, redirect, request, url_for
+from flask import render_template, redirect, request, url_for, flash
 from flask_login import login_required, current_user
 from app.student import student
 from app.models import Student, PlacementDrive, Application,Company
 from app import db
-
+import os
+from werkzeug.utils import secure_filename
 
 @student.route('/student/dashboard')
 @login_required
@@ -63,6 +64,11 @@ def apply_drive(drive_id):
      return redirect(url_for('student.s_student'))
 
 
+ALLOWED_EXTENSIONS = {'pdf', 'doc', 'docx'}
+
+def allowed_file(filename):
+    return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
+
 @student.route('/student/stu_profile/<int:id>', methods=['POST','GET'])
 @login_required
 def stu_profile(id):
@@ -84,6 +90,20 @@ def stu_profile(id):
         email = request.form.get("email")
         if email:
             curr_student.user.email = email
+        # resume logic
+        file = request.files.get('resume')
+
+        if file and file.filename != '':
+            if allowed_file(file.filename):
+                filename = secure_filename(file.filename)
+                filename = f"resume_{curr_student.id}_{filename}"
+
+                upload_folder = os.path.join('app', 'static', 'uploads')
+                file.save(os.path.join(upload_folder, filename))
+                curr_student.resume = filename
+            else:
+                flash("Only PDF, DOC, DOCX allowed!", "danger")
+                return redirect(request.url)
 
         db.session.commit()
         return redirect (url_for("student.s_student"))
@@ -93,7 +113,7 @@ def stu_profile(id):
 
 @student.route('/student/stu_history/<int:id>', methods=['GET'])
 @login_required
-def stu_history():
+def stu_history(id):
     if current_user.role != "student":
         return "Unauthorized", 403
 
@@ -162,6 +182,11 @@ def explore():
 
     if current_user.role != "student":
         return "Unauthorized", 403
+    
+    open_drives = PlacementDrive.query.filter_by(status='open').all()
+    for drive in open_drives:
+        drive.auto_close()
+    db.session.commit()
     
     stu = Student.query.filter_by(user_id=current_user.id).first()
     search = request.args.get("search")

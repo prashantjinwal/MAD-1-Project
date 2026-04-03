@@ -9,7 +9,7 @@
             <h3 class="mb-4 text-primary">
                Update Profile
             </h3>
-     <form method="POST"  >
+     <form method="POST" enctype="multipart/form-data"  >
 
           <div class="row g-3">
                <!-- name -->
@@ -82,6 +82,21 @@
                            value="{{ curr_student.user.email }}"
                            required>
                </div>
+
+              <div class="col-md-12">
+               <label class="form-label fw-semibold ">
+                    Resume : 
+               </label>
+               <input type="file" name="resume" accept=".pdf,.doc,.docx">
+               {% if curr_student.resume %}
+                    <small class="text-muted"> Current: 
+                         <a href="{{ url_for('static', filename='uploads/' + curr_student.resume) }}" target="_blank">
+                              View Resume
+                         </a>
+                    </small>
+               {% endif %}
+              </div>
+               
           </div>
 
                

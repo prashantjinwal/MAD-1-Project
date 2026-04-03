@@ -27,6 +27,10 @@ def c_company():
     # Total applications
     total_applications = sum(len(d.applications) for d in drives)
 
+    for drive in comp.drives:
+        drive.auto_close()
+    db.session.commit()
+
     return render_template(
         'company/c_dashboard.html',
         comp=comp,
