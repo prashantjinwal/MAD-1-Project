@@ -57,8 +57,6 @@ class Company(db.Model):
      
 
 
-
-
 # Placement drive
 class PlacementDrive(db.Model):
      __tablename__ = "placement_drives"
@@ -73,6 +71,7 @@ class PlacementDrive(db.Model):
 
      created_at  = db.Column(db.DateTime, default=datetime.utcnow)
      company= db.relationship('Company', backref='drives')
+     # applications = db.relationship('Application', backref='drive_ref', cascade='all, delete-orphan')
 
      def __repr__(self):
           return f"<Drive {self.job_title}>"

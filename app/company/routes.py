@@ -114,6 +114,8 @@ def delete_drive(id):
     if drive.company_id != current_user.company.id:
         abort(403)
 
+    Application.query.filter_by(drive_id=drive.id).delete()
+
     db.session.delete(drive)
     db.session.commit()
     return redirect(url_for("company.c_company"))
@@ -197,6 +199,9 @@ def update_application_status(app_id, status):
 @login_required
 def com_profile(id):
     curr_company = Company.query.get_or_404(id)
+    if curr_company.user_id != current_user.id:
+        abort(403)
+
     if request.method == "POST":
         curr_company.company_name = request.form.get("company_name")
         curr_company.hr_name  = request.form.get("hr_name")
