@@ -74,7 +74,7 @@ def register_company():
 
          
 # universal login
-@auth.route("/login/student", methods=['GET','POST'])
+@auth.route("/login", methods=['GET','POST'])
 def login():
     if request.method == 'POST':
         email = request.form.get('email')

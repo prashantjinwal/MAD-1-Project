@@ -1,22 +1,78 @@
 {% extends 'base.html' %}
 
 {% block content %}
-     <div class="p-5 bg-secondary bg-opacity-25 ">
+     <div class="p-5 bg-opacity-25 ">
           <div class="py-3"> 
-               <h3 class="fs-3">Admin dashboard</h3>
+               <h3 class="fs-2">Admin dashboard</h3>
           </div>
-
           <!-- count start -->
           {% block stats %}    
           {% endblock %}
-
+          
           <!-- pending companies -->
           {% include 'admin/pending_company.html'   %}
 
           <!-- drives -->
           {% include 'admin/drives.html'   %}
-         
 
-
+          {% include 'admin/charts.html'   %}
      </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  const el = document.getElementById('applicationchart');
+  if (el) {
+    new Chart(el, {
+      type: 'doughnut',
+      data: {
+        labels: ['Applied', 'Shortlisted', 'Selected', 'Rejected'],
+        datasets: [{
+          data: [
+            {{ status_applied }},
+            {{ status_shortlisted }},
+            {{ status_selected }},
+            {{ status_rejected }}
+          ],
+          backgroundColor: ['#0d6efd', '#ffc107', '#198754', '#dc3545']
+        }]
+      }
+    });
+  }
+
+
+  const driveEl = document.getElementById('driveChart');
+  if (driveEl) {
+    new Chart(driveEl, {
+      type: 'bar',
+      data: {
+        labels: ['Pending', 'Open', 'rejected', 'Closed'],
+        datasets: [{
+          label: 'Drives',
+          data: [
+            {{ drives_pending }},
+            {{ drives_open }},
+            {{ drives_rejected }},
+            {{ drives_closed }}
+          ],
+          backgroundColor: ['#ffc107', '#198754', '#dc3545', '#6c757d']
+        }]
+      },
+      options: {
+        indexAxis: 'y',  
+        maintainAspectRatio: false,  
+        plugins: {
+          legend: { display: false }
+        },
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: { stepSize: 1 }
+          }
+        }
+      }
+    });
+  }
+
+</script>
 {% endblock %}

@@ -24,7 +24,7 @@ def a_admin():
     blacklist_companies = Company.query.filter_by(approval_status='blacklisted').all()
     # pending companies
     pending_companies = Company.query.filter_by(approval_status='pending').all()
-   #  reject_companies = Company.query.filter_by(approval_status='rejected').all()
+    #  reject_companies = Company.query.filter_by(approval_status='rejected').all()
     all_blocked_companies = blacklist_companies 
 
     #placement drives
@@ -33,6 +33,17 @@ def a_admin():
     pending_drives = PlacementDrive.query.filter_by(status='pending').all()
     reject_drives = PlacementDrive.query.filter_by(status='rejected').all()
 
+    # application status counts
+    status_applied = Application.query.filter_by(status='applied').count()
+    status_shortlisted = Application.query.filter_by(status='shortlisted').count()
+    status_selected = Application.query.filter_by(status='selected').count()
+    status_rejected = Application.query.filter_by(status='rejected').count()
+
+    # drive status count
+    drives_pending = PlacementDrive.query.filter_by(status='pending').count()
+    drives_open = PlacementDrive.query.filter_by(status='open').count()
+    drives_rejected = PlacementDrive.query.filter_by(status='rejected').count()
+    drives_closed = PlacementDrive.query.filter_by(status='closed').count()
 
     return render_template(
         'admin/dashboard.html',
@@ -46,7 +57,15 @@ def a_admin():
         all_blocked_companies=all_blocked_companies,
         drive_view=drive_view,
         pending_drives=pending_drives,
-        reject_drives=reject_drives
+        reject_drives=reject_drives,
+        status_applied=status_applied,
+        status_shortlisted=status_shortlisted,
+        status_selected=status_selected,
+        status_rejected=status_rejected,
+        drives_pending=drives_pending,
+        drives_open=drives_open,
+        drives_rejected=drives_rejected,
+        drives_closed=drives_closed,
 
     )
 
