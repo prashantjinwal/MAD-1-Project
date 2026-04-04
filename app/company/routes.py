@@ -215,6 +215,7 @@ def com_profile(id):
             curr_company.user.email = email
 
         db.session.commit()
-        return redirect (url_for("company.c_company"))
+        flash("Profile updated successfully!", "success")
+        return redirect (url_for('company.com_profile', id=curr_company.id))
 
     return render_template ("company/profile.html", curr_company=curr_company)

@@ -5,6 +5,17 @@
 <div class="container mt-5">
     <div class="card shadow-lg border-0 rounded-4 w-50 mx-auto">
         <div class="card-body p-4">
+          {% with messages = get_flashed_messages(with_categories=true) %}
+               {% if messages %}
+                    {% for category, message in messages %}
+                         <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" id="flash-alert">
+                         <i class="bi bi-check-circle-fill me-2"></i>
+                              {{ message }}
+                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                         </div>
+                    {% endfor %}
+               {% endif %}
+          {% endwith %}
 
             <h3 class="mb-4 text-primary">
                Update Profile
@@ -117,4 +128,13 @@
         </div>
     </div>
 </div>
+<script>
+  setTimeout(() => {
+    const alert = document.getElementById('flash-alert');
+    if (alert) {
+      const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
+      bsAlert.close();
+    }
+  }, 3000);
+</script>
 {% endblock %}

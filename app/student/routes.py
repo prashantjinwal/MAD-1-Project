@@ -106,7 +106,8 @@ def stu_profile(id):
                 return redirect(request.url)
 
         db.session.commit()
-        return redirect (url_for("student.s_student"))
+        flash("Profile updated successfully!", "success")
+        return redirect(url_for('student.stu_profile', id=curr_student.id))
 
     return render_template ("student/profile.html", curr_student=curr_student)
 
