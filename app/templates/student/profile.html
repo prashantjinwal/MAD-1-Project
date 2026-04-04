@@ -8,10 +8,9 @@
           {% with messages = get_flashed_messages(with_categories=true) %}
                {% if messages %}
                     {% for category, message in messages %}
-                         <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert" id="flash-alert">
-                         <i class="bi bi-check-circle-fill me-2"></i>
+                         <div class="alert alert-{{ category }} alert-dismissible fade show flash-alert" role="alert">
                               {{ message }}
-                         <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                              <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
                          </div>
                     {% endfor %}
                {% endif %}
@@ -130,11 +129,10 @@
 </div>
 <script>
   setTimeout(() => {
-    const alert = document.getElementById('flash-alert');
-    if (alert) {
+    document.querySelectorAll('.flash-alert').forEach(alert => {
       const bsAlert = bootstrap.Alert.getOrCreateInstance(alert);
       bsAlert.close();
-    }
-  }, 3000);
+    });
+  }, 1000);
 </script>
 {% endblock %}

@@ -17,10 +17,15 @@
                 <td>{{ drive.job_title }}</td>
                 <td>{{ drive.deadline.strftime('%Y-%m-%d') }}</td>
                 <td>
-                    <a href="/student/apply/{{ drive.id }}" 
+                    <!-- <a href="/student/apply/{{ drive.id }}" 
                        class="btn btn-success btn-sm">
                        Apply
-                    </a>
+                    </a> -->
+                    {% if drive.id in applied_drive_ids %}
+                        <button class="btn btn-secondary btn-sm" disabled> Applied </button>
+                    {% else %}
+                     <a href="/student/apply/{{ drive.id }}" class="btn btn-success btn-sm"> Apply </a>   
+                    {% endif %}
                 </td>
             </tr>
             {% endfor %}

@@ -23,7 +23,9 @@ def s_student():
     total_applied = len(applications)
     total_shortlist_dives = Application.query.filter_by(status="shortlisted",student_id=stu.id).count()
     total_selected_dives = Application.query.filter_by(status="selected",student_id=stu.id).count()
-    
+    drives = PlacementDrive.query.filter_by(status="open").all()
+    applied_drive_ids = [app.drive_id for app in applications]
+
     return render_template(
         'student/s_dashboard.html',
         stu=stu,
@@ -31,7 +33,9 @@ def s_student():
         applications=applications,
         total_applied=total_applied,
         total_shortlist_dives=total_shortlist_dives,
-        total_selected_dives=total_selected_dives
+        total_selected_dives=total_selected_dives,
+        drives=drives,
+        applied_drive_ids=applied_drive_ids
     )
 
 
@@ -144,10 +148,13 @@ def my_application():
     applied_drive_ids = [app.drive_id for app in applied_apps]
 
     # open drives jo student ne apply nahi ki
-    available_drives = PlacementDrive.query.filter(
-        PlacementDrive.status == "open",
-        ~PlacementDrive.id.in_(applied_drive_ids)
-    ).all()
+    if applied_drive_ids:
+        available_drives = PlacementDrive.query.filter(
+            PlacementDrive.status == "open",
+            ~PlacementDrive.id.in_(applied_drive_ids)
+        ).all()
+    else:
+        available_drives = PlacementDrive.query.filter_by(status="open").all()
 
     return render_template('student/my_application.html', drives=available_drives)
 
