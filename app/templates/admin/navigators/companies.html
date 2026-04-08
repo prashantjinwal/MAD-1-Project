@@ -4,7 +4,7 @@
 
 <div class="card shadow p-4 mt-5 mx-5">
     <div class="d-flex justify-content-between">
-          <h4>Pending drives</h4> 
+          <h4>Companies</h4> 
           <form method="GET" action="{{ url_for('admin.companies') }}" class="d-flex">
                <input type="text" name="search" placeholder="Search by company name" class="form-control me-2" value="{{ request.args.get('search','') }}">
                <button class="btn btn-primary">Search</button>

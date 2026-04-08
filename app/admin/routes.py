@@ -7,7 +7,6 @@ from sqlalchemy import or_
 
 
 
-
 @admin.route('/admin/dashboard')
 @login_required
 def a_admin():
@@ -81,6 +80,8 @@ def blacklist_company(id):
      db.session.commit()
      return redirect(request.referrer)
 
+
+
 @admin.route('/admin/approve/<int:id>')
 @login_required
 def approve_company(id):
@@ -92,6 +93,7 @@ def approve_company(id):
      db.session.commit()
      return redirect(request.referrer)
 
+
 @admin.route('/admin/pending/<int:id>')
 @login_required
 def pending_company(id):
@@ -102,6 +104,8 @@ def pending_company(id):
      company.approval_status = "pending"
      db.session.commit()
      return redirect(request.referrer)
+
+
 
 @admin.route('/admin/reject/<int:id>')
 @login_required
@@ -139,6 +143,7 @@ def approve_drives(id):
      db.session.commit()
      return redirect(request.referrer)
 
+
 # navigators
 @admin.route('/admin/companies')
 @login_required
@@ -158,6 +163,8 @@ def companies():
 
      return render_template('admin/navigators/companies.html', companies=companies)
 
+
+
 @admin.route('/admin/students')
 @login_required
 def students():
@@ -175,6 +182,8 @@ def students():
 
      return render_template('admin/navigators/students.html', students=students)
      
+
+
 @admin.route('/admin/deactivate_student/<int:id>')
 @login_required
 def deactivate_student(id):
@@ -188,6 +197,7 @@ def deactivate_student(id):
          stu.is_blacklisted = True
      db.session.commit()
      return redirect(request.referrer)
+
 
 
 @admin.route('/admin/drives')
